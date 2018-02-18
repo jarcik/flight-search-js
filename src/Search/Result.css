@@ -1,0 +1,24 @@
+.Result {
+    margin: 10px;
+}
+
+.Result table {
+    padding: 5px;
+    margin: auto;
+}
+
+.Result td, .Result th {
+    padding: 10px 20px;     
+}
+
+.Result table thead {
+    background-color: #ff6344;
+}
+
+.Result table tr:nth-child(2n) {
+    background-color: #ff6344;
+}
+
+.Result table tr:nth-child(2n+1) {
+    background-color: #ffa18f;
+}
