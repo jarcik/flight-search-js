@@ -1,0 +1,18 @@
+.Results {
+    position: absolute;
+    border: 1px solid #ff9d8a;
+    list-style-type: none;
+    padding:0;
+    margin-top: 5px;
+    right: 0;
+}
+
+.Results > li {
+    padding: 10px 5px;
+    width: 300px;
+    cursor: pointer;
+}
+
+.Results > li:hover {
+    background: #ff9d8a;
+}

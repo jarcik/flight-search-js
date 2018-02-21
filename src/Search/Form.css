@@ -26,6 +26,10 @@ input[type=submit] {
     margin-left: 150px;
 }
 
+input:-webkit-autofill {
+    background-color: #ff9d8a;
+}
+
 label {
     margin-right: 5px;
     font-weight: bold;  
@@ -42,4 +46,5 @@ img {
     top: 50px;
     left: 0;
     border: 1px solid #ff9d8a;
+    background-color: white;
 }

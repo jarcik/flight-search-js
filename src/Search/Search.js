@@ -7,38 +7,57 @@ class Search extends Component {
     constructor() {
         super();
         this.state = {
+            //serached flights
           flights: [],
+          //loader show during api request
+          loader: false
         };
       }
     
     //submitted form for searching
     submitForm(form){
         if(form) {
-            console.log(form);
+            //show loader
+            this.setState({
+                loader:true,
+                flights:[]
+            });
+            //serach flights
             this.getFlights(form);
         }
     }
 
+    //flight api serach
     getFlights(form) {
+        //url
         let basicUrl = "https://api.skypicker.com/flights?";
         let from = "flyFrom=" + encodeURIComponent(form.from);
         let to = form.to ? "&to="+ encodeURIComponent(form.to) : '';
         let date = "&dateFrom=" + encodeURIComponent(form.date);
         let sort = "&sort=date";
         let url = basicUrl+from+to+date+sort;
+        //fetching data
         fetch(url).then((results) => {
             return results.json();
         }).then((data) => {
             this.setState({
-                flights: data
-                });
+                //fetched data
+                flights: data,
+                //hide loader
+                loader:false
+            });
         });
     }
   render() {
     return (
-      <div className="Search">
-      <Form submitForm={this.submitForm.bind(this)} />
-      <Result flights={this.state.flights} />
+      <div>
+            <Form submitForm={this.submitForm.bind(this)} />
+            <Result flights={this.state.flights} />
+            {this.state.loader ?
+            <div className="loader">
+                <div className="dot1"></div>
+                <div className="dot2"></div>
+            </div> : ""}
       </div>
     );
   }

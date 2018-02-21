@@ -3,6 +3,7 @@ import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 import './Form.css';
 import calendarIco from './icon-calendar.svg';
+import Autocomplete from './Autocomplete';
     
 class Form extends Component {
     constructor(props) {
@@ -11,15 +12,23 @@ class Form extends Component {
         let today = new Date();
         //inicialization of state of the form
         this.state = {
+            //city from (to api call)
             from: '',
+            //city to (to api call)
             to: '',
+            //formatted date (to api call)
             date: today.toLocaleDateString('en-GB'),
+            //date for datepicker
             dateFromDate: today,
-            showDayPicker: false
+            //is datepicker shown?
+            showDayPicker: false,
+            //autocomplete data
+            autocompleteData: []
         };
 
-        //handling changes on input fields
-        this.handleInputChange = this.handleInputChange.bind(this);
+        //handling changes on input fields of autocomplete
+        this.handleAutocompleteChange = this.handleAutocompleteChange.bind(this);
+        //handle selecting date
         this.handleDateChange = this.handleDateChange.bind(this);
         //handling submitting the form
         this.onSubmit = this.onSubmit.bind(this);
@@ -29,12 +38,12 @@ class Form extends Component {
 
     //change in value of input fields
     handleInputChange(event) {
-        const target = event.target;
-        const value = target.value;
-        const name = target.name;
+        let target = event.target;
+        let value = target.value;
+        let name = target.name;
 
         this.setState({
-        [name]: value
+            [name]: value
         });
     }
 
@@ -44,31 +53,36 @@ class Form extends Component {
         this.setState({
             date: selected ? undefined : day.toLocaleDateString('en-GB'),
             dateFromDate: selected ? undefined : day,
+            showDayPicker: false
         });
     }
 
     //submitting form
     onSubmit(event) {        
         event.preventDefault();
+        //submitting form
         this.props.submitForm(this.state);
     }
 
     //click on calendar icon -> show or hide
     calendarIconClick(event) {
+        //show/hide picker
         this.setState({showDayPicker: !this.state.showDayPicker});
+    }
+
+    //handle change on autocomplete
+    handleAutocompleteChange(name, value) {
+        //updating form value for from/to inputs
+        this.setState({
+            [name]: value
+        });
     }
 
   render() {
     return (
-      <form onSubmit={this.onSubmit} className="Form">
-        <div className="FormGroup">
-            <label htmlFor="from">From</label>
-            <input type="text" name="from" id="from" value={this.state.from} onChange={this.handleInputChange} required />        
-        </div>
-        <div className="FormGroup">
-            <label htmlFor="to">To</label>
-            <input type="text" name="to" id="to" value={this.state.to} onChange={this.handleInputChange} required />
-        </div>
+        <form onSubmit={this.onSubmit} className="Form" autoComplete="off">        
+        <Autocomplete label="From" name="from" onChange={this.handleAutocompleteChange} onSelect={this.handleAutocompleteChange} />
+        <Autocomplete label="To" name="to" onChange={this.handleAutocompleteChange} onSelect={this.handleAutocompleteChange} />
         <div className="FormGroup">
             <label>Date</label>
             <img src={calendarIco} alt="calendar icon" onClick={this.calendarIconClick} />

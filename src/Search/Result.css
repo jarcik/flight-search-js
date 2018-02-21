@@ -22,3 +22,13 @@
 .Result table tr:nth-child(2n+1) {
     background-color: #ffa18f;
 }
+
+.Result .paging > span {
+    font-weight: bold;
+    padding: 5px;
+}
+
+.Result .paging > span.active, .Result .paging > span:hover {
+    background: #ff6344;
+    border-radius: 50%;
+}
